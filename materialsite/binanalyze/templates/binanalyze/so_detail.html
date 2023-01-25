@@ -1,0 +1,14 @@
+{% extends "binanalyze/base.html" %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-header">
+            {{ shipord.name }}
+        </div>
+        <div class="card-body">
+            {% for itm in shipord.items.all %}
+            <p>{{ itm.name }}<p>
+            {% endfor%}
+        </div>
+    </div>
+{% endblock content %}

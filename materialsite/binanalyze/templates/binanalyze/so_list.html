@@ -1,0 +1,16 @@
+{% extends "binanalyze/base.html" %}
+
+{% block content %}
+    {% for shipord in shipords %}
+        <div class="card">
+            <div class="card-header">
+                <b><a href="{% url 'binanalyze:so-detail' shipord.id %}">{{ shipord.name }}</a></b>
+            </div>
+            <div class="card-body">
+                {% for itm in shipord.items.all %}
+                <p>{{ itm.name }}<p>
+                {% endfor%}
+            </div>
+        </div>
+    {% endfor %}
+{% endblock content %}
