@@ -16,6 +16,9 @@ class Item(models.Model):
 
     def __str__(self) -> str:
         return self.name
+
+    def get_absolute_url(self):
+        return reverse('binanalyze:item-detail', kwargs= {'pk': self.pk})
     
 # Dimensions and weight
 # Name
@@ -28,6 +31,9 @@ class Bin(models.Model):
 
     def __str__(self) -> str:
         return self.name
+    
+    def get_absolute_url(self):
+        return reverse('binanalyze:bin-detail', kwargs= {'pk': self.pk})
 
 # Models all SO, SO contain items which should be shipped together
 # many to many, one shipment can have many items, one item can have many SO

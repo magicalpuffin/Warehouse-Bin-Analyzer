@@ -2,33 +2,22 @@
 # Needs to be in materialsite directory to run correctly
 # Needs to be run through py manage.py shell instead of just py
 
+import pandas as pd
 from binanalyze.models import Item, Bin, ShippingOrder
+from binanalyze.binpackfunctions import pack_SO
 
-Item.objects.all()
-itm1 = Item(name= 'item1', length= 1, width = 2, height = 3, weight= 0.5)
-itm2 = Item(name= 'item2', length= 12, width = 31, height = 66)
-itm3 = Item(name= 'item3')
+# uuhhhhhh the model 'Bin' would conflict with 'Bin' from p3dbp
 
-# items must be saved before being able to be set in a many to many relation
-itm1.save()
-itm2.save()
-itm3.save()
+soobjs = ShippingOrder.objects.all()
+so_df = pd.DataFrame.from_records(soobjs.values('name', 'items__name', 'items__length', 'items__width', 'items__height', 'items__weight'))
+so_df.columns = ['Shipment_Number', 'Item Number', 'Length', 'Width', 'Height', 'Weight']
+so_df.loc[:, 'Quantity'] = 1
+so_df = so_df.set_index('Shipment_Number')
+so_df
 
-itm1 = Item.objects.get(pk = 2)
-itm2 = Item.objects.get(pk = 3)
+binobjs = Bin.objects.all()
+bin_df = pd.DataFrame.from_records(binobjs.values('name', 'length', 'width', 'height', 'weight'))
+bin_df.columns = ['Bin Name', 'Length', 'Width', 'Height', 'Weight']
+bin_df
 
-
-so1 = ShippingOrder.objects.first()
-
-# adding to many to many relation
-so1.items.add(itm1, itm2)
-so1.items.all()
-
-so1.items.remove(itm2)
-so1.items.all()
-
-# figuring out how to put this stuff into a dataframe will be pain
-# or changing the format of the bin packing to use other data types
-# i guess there is basic functionality...
-# I want to make unit tests but there isn't anything to test yet...
-# many to many is already built into django orm
+result_df = so_df.groupby(level= 0).apply(pack_SO, bin_df=bin_df)

@@ -1,0 +1,15 @@
+{% extends "binanalyze/base.html" %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-header">
+            {{ object.name }}
+        </div>
+        <div class="card-body">
+            <p>{{ object.length }}<p>
+            <p>{{ object.width }}<p>
+            <p>{{ object.height }}<p>
+            <p>{{ object.weight }}<p>
+        </div>
+    </div>
+{% endblock content %}
