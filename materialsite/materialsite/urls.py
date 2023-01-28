@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+# TODO Either redirect to bin analyze or actually have a home page
 urlpatterns = [
     path('binanalyze/', include('binanalyze.urls')),
     path('admin/', admin.site.urls),

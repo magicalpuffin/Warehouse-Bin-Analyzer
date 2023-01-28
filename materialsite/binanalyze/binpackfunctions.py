@@ -1,6 +1,9 @@
 import pandas as pd
 from py3dbp import Packer, Bin, Item
 
+# Currently these functions were just imported from the previous project and made to be functional
+# Should consider other bin packing optimization packages
+
 def get_solution_bin(packer):
     """
     Finds the best bin that packed the items based on packing object. Will pick bin with smallest volume. \n

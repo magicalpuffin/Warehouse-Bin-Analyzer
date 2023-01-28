@@ -22,6 +22,16 @@ import json
 #     context = {'so_list' : ShippingOrder.objects.all()}
 #     return render(request, 'binanalyze/index.html', context)
 
+# TODO Reorganize, separate views into multiple files, consider using inheritence
+# TODO Use forms and template based views
+# TODO Create a home page view
+# TODO pagination
+
+# Changes for templates
+    # Proper table view of items in shipping orders
+    # Ideally table editing of multiple items, consider formsets
+    # Have a better way for selecting items in a shipping order
+
 class SOListView(ListView):
     model = ShippingOrder
     template_name = 'binanalyze/so_list.html'
@@ -87,6 +97,16 @@ class BinDeleteView(DeleteView):
     success_url = '/binanalyze'
     template_name = 'binanalyze/confirm_delete.html'
 
+# TODO Create multiple analyze views
+    # Bin packing and results
+    # Bins and bin ussage
+    # Items and item frequencies
+    # Shipping order volumes
+    # Data visualizations
+    # Individually pack certain orders
+    # Data visualization on volume and weight utilization
+    # Many of these will probably need to merge with dash
+
 # Analyze
 class AnalyzeView(TemplateView):
     template_name = 'binanalyze/analyze.html'
@@ -101,6 +121,8 @@ class AnalyzeView(TemplateView):
     def post(self, request, *args, **kwargs):
         context = self.get_context_data()
 
+        # Selects all shipping orders, renames due to how the current binpackfunction works
+        # Manually sets all quantities to 1 because I haven't figured that out yet
         soobjs = ShippingOrder.objects.all()
         so_df = pd.DataFrame.from_records(soobjs.values('name', 'items__name', 'items__length', 'items__width', 'items__height', 'items__weight'))
         so_df.columns = ['Shipment_Number', 'Item Number', 'Length', 'Width', 'Height', 'Weight']
@@ -113,6 +135,7 @@ class AnalyzeView(TemplateView):
 
         result_df = so_df.groupby(level= 0).apply(pack_SO, bin_df=bin_df)
 
+        # TODO Check if this actually fine for displaying dataframes as tables
         json_records = result_df.reset_index().to_json(orient ='records')
         data = []
         data = json.loads(json_records)
