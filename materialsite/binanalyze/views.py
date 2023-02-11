@@ -1,5 +1,10 @@
+import pandas as pd
+import json
+
+from .models import ShippingOrder, Item, Bin
+from .utils.py3dbp_wrapper import pack_SO
+
 from django.shortcuts import render
-from binanalyze.models import ShippingOrder
 from django.views.generic import (
     ListView,
     DetailView,
@@ -8,13 +13,6 @@ from django.views.generic import (
     DeleteView,
     TemplateView,
 )
-
-from .models import ShippingOrder, Item, Bin
-
-from binanalyze.binpackfunctions import pack_SO
-
-import pandas as pd
-import json
 
 # Create your views here.
 
