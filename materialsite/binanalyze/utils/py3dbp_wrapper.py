@@ -60,13 +60,13 @@ def pack_SO(df, bin_df):
     # Loops through each item in SO. Will add items to packer multiple times based on quantity.
     # Index should be the item name.
     for index, row in df.iterrows():
-        for i in range(int(row["Quantity"])):
-            packer.add_item(Item(index, row["Length"], row["Width"], row["Height"], row["Weight"]))
+        for i in range(int(row["quantity"])):
+            packer.add_item(Item(index, row["item_length"], row["item_width"], row["item_height"], row["item_weight"]))
 
     # Loops though each bins and adds them into the packer object
     # I want to switch this to use indexes but it breaks the package for some reason
     for index, row in bin_df.iterrows():
-        packer.add_bin(Bin(row["Bin Name"], row["Length"], row["Width"], row["Height"], row["Weight"]))
+        packer.add_bin(Bin(row["bin_name"], row["bin_length"], row["bin_width"], row["bin_height"], row["bin_weight"]))
     
     # Packer evaluates how well items are packed in each bin
     packer.pack()

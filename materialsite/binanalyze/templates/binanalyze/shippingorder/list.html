@@ -1,13 +1,13 @@
 {% extends "binanalyze/base.html" %}
 
 {% block content %}
-    <a class="btn btn-outline-primary" href="{% url 'binanalyze:so-create' %}">Create Shipping Order</a>
+    <a class="btn btn-outline-primary" href="{% url 'binanalyze:shippingorder-create' %}">Create Shipping Order</a>
     <a class="btn btn-outline-primary" href="{% url 'binanalyze:item-create' %}">Create Item</a>
     <a class="btn btn-outline-primary" href="{% url 'binanalyze:bin-create' %}">Create Bin</a>
     {% for shipord in shipords %}
         <div class="card">
             <div class="card-header">
-                <b><a href="{% url 'binanalyze:so-detail' shipord.id %}">{{ shipord.name }}</a></b>
+                <b><a href="{% url 'binanalyze:shippingorder-detail' shipord.id %}">{{ shipord.name }}</a></b>
             </div>
             <div class="card-body">
                 {% for itm in shipord.items.all %}

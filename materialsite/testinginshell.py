@@ -35,7 +35,7 @@ item1 = Item.objects.get(name= 'Item1')
 
 # Selects Shipping order, items and quantity
 ShippingOrderItem.objects.filter(shippingorder = so1)
-pd.DataFrame.from_records(ShippingOrderItem.objects.filter(shippingorder = so1).values('shippingorder__name', 'item__name', 'quantity'))
+pd.DataFrame.from_records(ShippingOrderItem.objects.filter(shippingorder = so1).values('shippingorder__name', 'quantity', 'item__name', 'item__length', 'item__width', 'item__height', 'item__weight'))
 
 # This was checking if bin packing works, the model has changed now and is outdated
 soobjs = ShippingOrder.objects.all()

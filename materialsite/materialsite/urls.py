@@ -15,9 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.shortcuts import redirect
 
-# TODO Either redirect to bin analyze or actually have a home page
 urlpatterns = [
+    path('', lambda request: redirect('binanalyze/', permanent= False)),
     path('binanalyze/', include('binanalyze.urls')),
     path('admin/', admin.site.urls),
 ]

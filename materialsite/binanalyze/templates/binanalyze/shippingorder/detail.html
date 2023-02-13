@@ -4,8 +4,8 @@
     <div class="card">
         <div class="card-header">
             {{ shipord.name }}
-            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'binanalyze:so-update' shipord.id %}">Update</a>
-            <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'binanalyze:so-delete' shipord.id %}">Delete</a>
+            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'binanalyze:shippingorder-update' shipord.id %}">Update</a>
+            <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'binanalyze:shippingorder-delete' shipord.id %}">Delete</a>
         </div>
         <div class="card-body">
             {% for itm in shipord.items.all %}
