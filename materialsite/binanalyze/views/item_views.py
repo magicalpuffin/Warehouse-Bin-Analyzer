@@ -14,6 +14,10 @@ from django.views.generic import (
     TemplateView,
 )
 
+class ItemListView(ListView):
+    model = Item
+    template_name = 'binanalyze/item/list.html'
+
 class ItemDetailView(DetailView):
     model = Item
     template_name = 'binanalyze/item/detail.html'

@@ -1,0 +1,33 @@
+{% extends "binanalyze/base.html" %}
+
+{% block content %}
+    <div class="container">
+        <h3>Items Table</h3><br>            
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Unit</th>
+                <th>Length</th>
+                <th>Width</th>
+                <th>Height</th>
+                <th>Weight</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% if object_list %}  
+            {% for item in object_list %}
+            <tr>
+                <td><b><a href="{% url 'binanalyze:item-detail' item.id %}">{{item.name}}</a></b></td>
+                <td>{{item.unitlength}}</td>
+                <td>{{item.length}}</td>
+                <td>{{item.width}}</td>
+                <td>{{item.height}}</td>
+                <td>{{item.weight}}</td>
+            </tr>
+            {% endfor %}
+            {% endif %}
+            </tbody>
+        </table>
+    </div>
+{% endblock content %}

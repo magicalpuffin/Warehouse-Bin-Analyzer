@@ -3,13 +3,13 @@
 {% block content %}
     <div class="card">
         <div class="card-header">
-            {{ shipord.name }}
-            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'binanalyze:shippingorder-update' shipord.id %}">Update</a>
-            <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'binanalyze:shippingorder-delete' shipord.id %}">Delete</a>
+            {{ object.name }}
+            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'binanalyze:shippingorder-update' object.id %}">Update</a>
+            <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'binanalyze:shippingorder-delete' object.id %}">Delete</a>
         </div>
         <div class="card-body">
-            {% for itm in shipord.items.all %}
-            <p>{{ itm.name }}<p>
+            {% for item in object.items.all %}
+            <p>{{ item.name }}<p>
             {% endfor%}
         </div>
     </div>

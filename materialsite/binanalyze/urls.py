@@ -10,6 +10,7 @@ urlpatterns = [
 ]
 
 item_urlpatterns = [
+    path('item/list/', views.ItemListView.as_view(), name= 'item-list'),
     path('item/create/', views.ItemCreateView.as_view(), name= 'item-create'),
     path('item/detail/<int:pk>/', views.ItemDetailView.as_view(), name= 'item-detail'),
     path('item/update/<int:pk>/', views.ItemUpdateView.as_view(), name= 'item-update'),
@@ -24,6 +25,7 @@ bin_urlpatterns = [
 ]
 
 shippingorder_urlpatterns = [
+    path('shippingorder/list/', views.ShippingOrderListView.as_view(), name= 'shippingorder-list'),
     path('shippingorder/create/', views.ShippingOrderCreateView.as_view(), name= 'shippingorder-create'),
     path('shippingorder/detail/<int:pk>/', views.ShippingOrderDetailView.as_view(), name= 'shippingorder-detail'),
     path('shippingorder/update/<int:pk>/', views.ShippingOrderUpdateView.as_view(), name= 'shippingorder-update'),
