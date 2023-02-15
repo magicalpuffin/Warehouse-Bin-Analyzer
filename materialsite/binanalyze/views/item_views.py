@@ -2,8 +2,9 @@ import pandas as pd
 import json
 
 from binanalyze.models import Item, Bin, ShippingOrder, ShippingOrderItem
-from binanalyze.utils.py3dbp_wrapper import pack_SO
+from binanalyze.tables import ItemTable
 
+from django_tables2 import SingleTableView
 from django.shortcuts import render
 from django.views.generic import (
     ListView,
@@ -14,8 +15,9 @@ from django.views.generic import (
     TemplateView,
 )
 
-class ItemListView(ListView):
+class ItemListView(SingleTableView):
     model = Item
+    table_class = ItemTable
     template_name = 'binanalyze/item/list.html'
 
 class ItemDetailView(DetailView):

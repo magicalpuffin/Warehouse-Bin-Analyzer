@@ -1,33 +1,17 @@
 {% extends "binanalyze/base.html" %}
 
+{% load render_table from django_tables2 %}
 {% block content %}
-    <div class="container">
-        <h3>Items Table</h3><br>            
-        <table class="table">
-            <thead>
-            <tr>
-                <th>Name</th>
-                <th>Unit</th>
-                <th>Length</th>
-                <th>Width</th>
-                <th>Height</th>
-                <th>Weight</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% if object_list %}  
-            {% for item in object_list %}
-            <tr>
-                <td><b><a href="{% url 'binanalyze:item-detail' item.id %}">{{item.name}}</a></b></td>
-                <td>{{item.unitlength}}</td>
-                <td>{{item.length}}</td>
-                <td>{{item.width}}</td>
-                <td>{{item.height}}</td>
-                <td>{{item.weight}}</td>
-            </tr>
-            {% endfor %}
-            {% endif %}
-            </tbody>
-        </table>
+<div class="container">
+    <div class="row">
+        <h3>Items Table</h3><br>
+        <div class="col-8">
+            {% render_table table %}
+        </div>
+        <div class="col-4">
+        TODO Make item creation form here
+        </div>
     </div>
+
+</div>
 {% endblock content %}
