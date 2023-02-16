@@ -32,6 +32,12 @@ shippingorder_urlpatterns = [
     path('shippingorder/delete/<int:pk>/', views.ShippingOrderDeleteView.as_view(), name= 'shippingorder-delete'),
 ]
 
+htmx_urlpatterns = [
+    path('add-item/', views.add_item, name= 'add-item'),
+]
+
 urlpatterns += item_urlpatterns
 urlpatterns += bin_urlpatterns
 urlpatterns += shippingorder_urlpatterns
+
+urlpatterns += htmx_urlpatterns
