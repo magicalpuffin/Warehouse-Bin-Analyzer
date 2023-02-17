@@ -7,15 +7,14 @@
         <h3>Items Table</h3>
         <div class="col-8">
             <div id="item-table">
-                {% include 'binanalyze/partials/item-table.html' %}
+                {% include 'binanalyze/item/partials/table.html' %}
             </div>
         </div>
         <div class="col-4">
         <h3>Item Creation</h3>
-        <form hx-post="{% url 'binanalyze:add-item' %}" hx-target="#item-table">
-            {% csrf_token %}
+        <form hx-post="{% url 'binanalyze:table-item-create' %}" hx-target="#item-table">
             {{ form|crispy }}
-            <button type="submit" class="btn btn-outline-info">Add Item</button>
+            <button type="submit" class="btn btn-outline-info">Create Item</button>
         </form>
         </div>
     </div>

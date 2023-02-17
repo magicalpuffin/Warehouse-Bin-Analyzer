@@ -16,7 +16,11 @@ from django.views.generic import (
     TemplateView,
 )
 
+# Seems to have a bug when caching and reloading page showing deleted items
+# Should add error messages
 class ItemListView(SingleTableMixin, TemplateView):
+    # default context name for table_class is table
+    # tables need have data passed
     table_class = ItemTable
     table_data = Item.objects.all()
     template_name = 'binanalyze/item/list.html'
@@ -45,8 +49,20 @@ class ItemDeleteView(DeleteView):
     success_url = '/binanalyze'
     template_name = 'binanalyze/item/delete.html'
 
-def add_item(request):
+# Function based views used to update table as part of htmx
+# Not sure if it is possible to use a class based view for these
+def table_item_create(request):
     newitem = ItemForm(request.POST)
     newitem.save()
 
-    return render(request, 'binanalyze/partials/item-table.html', {'table': ItemTable(Item.objects.all())})
+    updatedtable = ItemTable(Item.objects.all())
+
+    return render(request, 'binanalyze/item/partials/table.html', {'table': updatedtable})
+
+def table_item_delete(request, pk):
+    removeitem = Item.objects.get(pk = pk)
+    removeitem.delete()
+
+    updatedtable = ItemTable(Item.objects.all())
+
+    return render(request, 'binanalyze/item/partials/table.html', {'table': updatedtable})

@@ -33,7 +33,10 @@ shippingorder_urlpatterns = [
 ]
 
 htmx_urlpatterns = [
-    path('add-item/', views.add_item, name= 'add-item'),
+    path('item/list/table-item-create/', views.table_item_create, name= 'table-item-create'),
+    path('item/list/table-item-delete/<int:pk>/', views.table_item_delete, name= 'table-item-delete'),
+    path('shippingorder/list/table-item-create/', views.table_shippingorder_create, name= 'table-shippingorder-create'),
+    path('shippingorder/list/table-item-delete/<int:pk>/', views.table_shippingorder_delete, name= 'table-shippingorder-delete'),
 ]
 
 urlpatterns += item_urlpatterns

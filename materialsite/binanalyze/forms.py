@@ -6,7 +6,16 @@ class ShippingOrderItemForm(forms.ModelForm):
         model = ShippingOrderItem
         fields = ['shippingorder', 'item', 'quantity']
 
+# form used to quick create items, other item creation uses create view
 class ItemForm(forms.ModelForm):
     class Meta:
         model = Item
-        fields = ['name', 'unitlength', 'length', 'width', 'height', 'weight']
+        fields = ['name', 'unitlength', 'length', 'width', 'height', 'unitweight', 'weight']
+
+class ShippingOrderForm(forms.ModelForm):
+    class Meta:
+        model = ShippingOrder
+        fields = ['name', 'order_date']
+        widgets = {
+            'order_date': forms.DateTimeInput(attrs={'type':'datetime-local'})
+        }

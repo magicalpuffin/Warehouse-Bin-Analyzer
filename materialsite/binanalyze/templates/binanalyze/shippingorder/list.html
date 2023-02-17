@@ -1,16 +1,23 @@
 {% extends "binanalyze/base.html" %}
 
+{% load crispy_forms_tags %}
 {% block content %}
-    {% for shippingorder in object_list %}
-        <div class="card">
-            <div class="card-header">
-                <b><a href="{% url 'binanalyze:shippingorder-detail' shippingorder.id %}">{{ shippingorder.name }}</a></b>
-            </div>
-            <div class="card-body">
-                {% for item in shippingorder.items.all %}
-                <p>{{ item.name }}<p>
-                {% endfor%}
+<div class="container">
+    <div class="row">
+        <h3>Shipping Order Table</h3>
+        <div class="col-8">
+            <div id="shippingorder-table">
+                {% include 'binanalyze/shippingorder/partials/table.html' %}
             </div>
         </div>
-    {% endfor %}
+        <div class="col-4">
+        <h3>Shipping Order Creation</h3>
+        <form hx-post="{% url 'binanalyze:table-shippingorder-create' %}" hx-target="#shippingorder-table">
+            {{ form|crispy }}
+            <button type="submit" class="btn btn-outline-info">Create Shipping Order</button>
+        </form>
+        </div>
+    </div>
+
+</div>
 {% endblock content %}
