@@ -12,10 +12,15 @@ class ShippingOrder(models.Model):
         return self.name
     
     def get_absolute_url(self):
-        return reverse('binanalyze:so-detail', kwargs= {'pk': self.pk})
+        return reverse('binanalyze:shippingorder-detail', kwargs= {'pk': self.pk})
 
 # Extra fields for ManyToManyField to track quantity of each item
 class ShippingOrderItem(models.Model):
     shippingorder = models.ForeignKey(ShippingOrder, on_delete=models.CASCADE)
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
     quantity = models.PositiveSmallIntegerField(default= 1)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields= ['shippingorder', 'item'], name= 'unique shippingorder item')
+        ]

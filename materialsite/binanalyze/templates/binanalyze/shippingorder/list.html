@@ -11,11 +11,11 @@
             </div>
         </div>
         <div class="col-4">
-        <h3>Shipping Order Creation</h3>
-        <form hx-post="{% url 'binanalyze:table-shippingorder-create' %}" hx-target="#shippingorder-table">
-            {{ form|crispy }}
-            <button type="submit" class="btn btn-outline-info">Create Shipping Order</button>
-        </form>
+            <h3>Shipping Order Creation</h3>
+            <form hx-post="{% url 'binanalyze:table-shippingorder-create' %}" hx-target="#shippingorder-table">
+                {{ form|crispy }}
+                <button type="submit" class="btn btn-outline-info">Create Shipping Order</button>
+            </form>
         </div>
     </div>
 

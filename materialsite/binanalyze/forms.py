@@ -1,17 +1,13 @@
 from django import forms
 from binanalyze.models import Item, ShippingOrder, ShippingOrderItem
 
-class ShippingOrderItemForm(forms.ModelForm):
-    class Meta:
-        model = ShippingOrderItem
-        fields = ['shippingorder', 'item', 'quantity']
-
 # form used to quick create items, other item creation uses create view
 class ItemForm(forms.ModelForm):
     class Meta:
         model = Item
         fields = ['name', 'unitlength', 'length', 'width', 'height', 'unitweight', 'weight']
 
+# DateTimeInput just defaults to normal text box
 class ShippingOrderForm(forms.ModelForm):
     class Meta:
         model = ShippingOrder
@@ -19,3 +15,9 @@ class ShippingOrderForm(forms.ModelForm):
         widgets = {
             'order_date': forms.DateTimeInput(attrs={'type':'datetime-local'})
         }
+
+# Used to add new items in the shippingorder detail view
+class ShippingOrderItemForm(forms.ModelForm):
+    class Meta:
+        model = ShippingOrderItem
+        fields = ['item', 'quantity']

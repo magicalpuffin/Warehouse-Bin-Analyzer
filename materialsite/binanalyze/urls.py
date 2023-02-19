@@ -5,7 +5,7 @@ from . import views
 app_name = 'binanalyze'
 
 urlpatterns = [
-    path('', views.ShippingOrderListView.as_view(), name= 'index'),
+    path('', views.IndexView.as_view(), name= 'index'),
     path('analyze/', views.AnalyzeView.as_view(), name= 'analyze'),
 ]
 
@@ -32,11 +32,15 @@ shippingorder_urlpatterns = [
     path('shippingorder/delete/<int:pk>/', views.ShippingOrderDeleteView.as_view(), name= 'shippingorder-delete'),
 ]
 
+# htmx urls used to update tables
+# Curious if normal web pages also have these utility urls and if they can be freely accessed?
 htmx_urlpatterns = [
     path('item/list/table-item-create/', views.table_item_create, name= 'table-item-create'),
     path('item/list/table-item-delete/<int:pk>/', views.table_item_delete, name= 'table-item-delete'),
     path('shippingorder/list/table-item-create/', views.table_shippingorder_create, name= 'table-shippingorder-create'),
     path('shippingorder/list/table-item-delete/<int:pk>/', views.table_shippingorder_delete, name= 'table-shippingorder-delete'),
+    path('shippingorder/detail/<int:pk>/table-shippingorderitem-create/', views.table_shippingorderitem_create, name= 'table-shippingorderitem-create'),
+    path('shippingorder/detail/<int:pk>/table-shippingorderitem-delete/<int:pk_1>/', views.table_shippingorderitem_delete, name= 'table-shippingorderitem-delete'),
 ]
 
 urlpatterns += item_urlpatterns

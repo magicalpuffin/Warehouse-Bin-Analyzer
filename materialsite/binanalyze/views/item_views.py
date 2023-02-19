@@ -5,7 +5,7 @@ from binanalyze.models import Item, Bin, ShippingOrder, ShippingOrderItem
 from binanalyze.tables import ItemTable
 from binanalyze.forms import ItemForm
 
-from django_tables2 import SingleTableView, SingleTableMixin
+from django_tables2 import SingleTableMixin
 from django.shortcuts import render
 from django.views.generic import (
     ListView,
