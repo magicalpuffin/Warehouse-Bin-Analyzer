@@ -1,0 +1,47 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light bg-body-tertiary">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'binanalyze:index' %}">Warehouse Bin Analyzer</a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'binanalyze:index' %}">Home</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                        Shipping Orders
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{% url 'binanalyze:shippingorder-list' %}">List</a></li>
+                        <li><a class="dropdown-item" href="{% url 'binanalyze:shippingorder-create' %}">Create</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                        Items
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{% url 'binanalyze:item-list' %}">List</a></li>
+                        <li><a class="dropdown-item" href="{% url 'binanalyze:item-create' %}">Create</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                        Bins
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{% url 'binanalyze:bin-list' %}">List</a></li>
+                        <li><a class="dropdown-item" href="{% url 'binanalyze:bin-create' %}">Create</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'binanalyze:analyze' %}">Analyze</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

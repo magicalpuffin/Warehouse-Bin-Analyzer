@@ -1,0 +1,3 @@
+<form hx-delete="{% url 'binanalyze:table-item-delete' record.pk %}" hx-target="#item-table" hx-confirm="Are you sure you want to delete {{record.name}}?">
+    <button type="submit" class="btn btn-outline-danger">X</button>
+</form>

@@ -1,0 +1,17 @@
+{% extends "binanalyze/base.html" %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-header">
+            {{ object.name }}
+            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'binanalyze:bin-update' object.id %}">Update</a>
+            <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'binanalyze:bin-delete' object.id %}">Delete</a>
+        </div>
+        <div class="card-body">
+            <p>{{ object.length }}<p>
+            <p>{{ object.width }}<p>
+            <p>{{ object.height }}<p>
+            <p>{{ object.weight }}<p>
+        </div>
+    </div>
+{% endblock content %}

@@ -1,0 +1,33 @@
+{% extends "binanalyze/base.html" %}
+
+{% load crispy_forms_tags %}
+{% load django_tables2 %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <H3>Shipping Order Detail</H3>
+        <div class="col-8">
+            <div class="card">
+                <div class="card-header">
+                    {{ object.name }}
+                    <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'binanalyze:shippingorder-update' object.id %}">Update</a>
+                    <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'binanalyze:shippingorder-delete' object.id %}">Delete</a>
+                </div>
+                <div class="card-body">
+                    <div id="shippingorderitem-table">
+                        {% include 'binanalyze/shippingorder/partials/table.html' %}
+                    </div>
+                </div>
+            </div>        
+        </div>
+        <div class="col-4">
+            <h3>Add Shipping Order Item</h3>
+            <form hx-post="{% url 'binanalyze:table-shippingorderitem-create' object.id %}" hx-target="#shippingorderitem-table">
+                {{ form|crispy }}
+                <button type="submit" class="btn btn-outline-info">Add Shipping Order Item</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

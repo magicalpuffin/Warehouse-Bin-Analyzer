@@ -1,0 +1,12 @@
+{% extends "binanalyze/base.html" %}
+
+{% load django_tables2 %}
+{% block content %}
+    <H2>Table Summary</H2>
+    <H3>Items</H3>
+    {% render_table tables.0 %}
+    <H3>Bins</H3>
+    {% render_table tables.1 %}
+    <H3>Shipping Orders</H3>
+    {% render_table tables.2 %}
+{% endblock content %}
