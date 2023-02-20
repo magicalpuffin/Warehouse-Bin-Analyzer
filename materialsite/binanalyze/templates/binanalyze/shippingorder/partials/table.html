@@ -1,2 +1,10 @@
 {% load render_table from django_tables2 %}
+
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
 {% render_table table %}

@@ -2,7 +2,7 @@ import pandas as pd
 import json
 
 from binanalyze.models import Item, Bin, ShippingOrder, ShippingOrderItem
-from binanalyze.tables import ItemTable, ShippingOrderTable
+from binanalyze.tables import ItemTable, BinTable, ShippingOrderTable
 from binanalyze.utils.py3dbp_wrapper import pack_SO
 
 from django_tables2 import MultiTableMixin
@@ -15,6 +15,7 @@ class IndexView(MultiTableMixin, TemplateView):
     template_name = 'binanalyze/index.html'
     tables = [
         ItemTable(Item.objects.all(), exclude= ['delete']),
+        BinTable(Bin.objects.all(), exclude= ['delete']),
         ShippingOrderTable(ShippingOrder.objects.all(), exclude= ['delete'])
         ]
     

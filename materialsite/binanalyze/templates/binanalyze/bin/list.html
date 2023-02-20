@@ -1,0 +1,23 @@
+{% extends "binanalyze/base.html" %}
+
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <h3>Bins Table</h3>
+        <div class="col-8">
+            <div id="bin-table">
+                {% include 'binanalyze/bin/partials/table.html' %}
+            </div>
+        </div>
+        <div class="col-4">
+        <h3>Bin Creation</h3>
+        <form hx-post="{% url 'binanalyze:table-bin-create' %}" hx-target="#bin-table">
+            {{ form|crispy }}
+            <button type="submit" class="btn btn-outline-info">Create Bin</button>
+        </form>
+        </div>
+    </div>
+
+</div>
+{% endblock content %}

@@ -8,6 +8,7 @@ from binanalyze.forms import ShippingOrderForm, ShippingOrderItemForm
 
 from django_tables2 import SingleTableView, SingleTableMixin
 from django.shortcuts import render
+from django.contrib import messages
 from django.views.generic import (
     ListView,
     DetailView,
@@ -70,16 +71,23 @@ class ShippingOrderDeleteView(DeleteView):
     template_name = 'binanalyze/shippingorder/delete.html'
 
 def table_shippingorder_create(request):
-    newshippingorder = ShippingOrderForm(request.POST)
-    newshippingorder.save()
+    if request.method == 'POST':
+        newshippingorderform = ShippingOrderForm(request.POST)
+        if newshippingorderform.is_valid():
+            newshippingorder = newshippingorderform.save()
+            messages.add_message(request, messages.SUCCESS, f'Created {newshippingorder.name}')
+        else:
+            messages.add_message(request, messages.WARNING, "Couldn't create shippingorder")
 
     updatedtable = ShippingOrderTable(ShippingOrder.objects.all())
 
     return render(request, 'binanalyze/shippingorder/partials/table.html', {'table': updatedtable})
 
 def table_shippingorder_delete(request, pk):
-    removeshippingorder = ShippingOrder.objects.get(pk = pk)
-    removeshippingorder.delete()
+    if request.method == 'DELETE':
+        removeshippingorder = ShippingOrder.objects.get(pk = pk)
+        removeshippingorder.delete()
+        messages.add_message(request, messages.SUCCESS, f'Deleted {removeshippingorder.name}')
 
     updatedtable = ShippingOrderTable(ShippingOrder.objects.all())
 
@@ -88,24 +96,36 @@ def table_shippingorder_delete(request, pk):
 # Used for editing the table in the detail view
 # Could rename stuff to be more clear
 def table_shippingorderitem_create(request, pk):
-    shippingorder = ShippingOrder.objects.get(pk = pk)
-    item = Item.objects.get(pk = request.POST.get('item'))
+    if request.method == 'POST':
+        shippingorder = ShippingOrder.objects.get(pk = pk)
+        item = Item.objects.get(pk = request.POST.get('item'))
 
-    newshippingorderitem = ShippingOrderItem(
-        shippingorder= shippingorder, 
-        item= item, 
-        quantity= request.POST.get('quantity')
-    )
-    newshippingorderitem.save()
+        # This could be an shippingorder.add()
+        newshippingorderitem = ShippingOrderItem(
+            shippingorder= shippingorder, 
+            item= item, 
+            quantity= request.POST.get('quantity')
+        )
+
+        # Adds exception message, not best practice if public
+        try:
+            newshippingorderitem.full_clean()
+        except Exception as e:
+            messages.add_message(request, messages.WARNING, f'Error: {e}')
+        else:
+            newshippingorderitem.save()
+            messages.add_message(request,messages.SUCCESS, f'Added {item.name} to {shippingorder.name}')
 
     updatedtable = ShippingOrderItemTable(ShippingOrderItem.objects.filter(shippingorder = shippingorder))
 
     return render(request, 'binanalyze/shippingorder/partials/table.html', {'table': updatedtable, 'object': shippingorder})
 
 def table_shippingorderitem_delete(request, pk, pk_1):
-    shippingorder = ShippingOrder.objects.get(pk = pk)
-    removeshippingorderitem = ShippingOrderItem.objects.get(pk = pk_1)
-    removeshippingorderitem.delete()
+    if request.method == 'DELETE':
+        shippingorder = ShippingOrder.objects.get(pk = pk)
+        removeshippingorderitem = ShippingOrderItem.objects.get(pk = pk_1)
+        removeshippingorderitem.delete()
+        messages.add_message(request, messages.SUCCESS, f'Removed {removeshippingorderitem.item.name} from {shippingorder.name}')
 
     updatedtable = ShippingOrderItemTable(ShippingOrderItem.objects.filter(shippingorder = shippingorder))
 

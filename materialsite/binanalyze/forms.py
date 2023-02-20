@@ -1,10 +1,15 @@
 from django import forms
-from binanalyze.models import Item, ShippingOrder, ShippingOrderItem
+from binanalyze.models import Item, Bin, ShippingOrder, ShippingOrderItem
 
 # form used to quick create items, other item creation uses create view
 class ItemForm(forms.ModelForm):
     class Meta:
         model = Item
+        fields = ['name', 'unitlength', 'length', 'width', 'height', 'unitweight', 'weight']
+
+class BinForm(forms.ModelForm):
+    class Meta:
+        model = Bin
         fields = ['name', 'unitlength', 'length', 'width', 'height', 'unitweight', 'weight']
 
 # DateTimeInput just defaults to normal text box

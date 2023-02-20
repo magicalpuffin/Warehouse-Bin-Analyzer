@@ -18,6 +18,7 @@ item_urlpatterns = [
 ]
 
 bin_urlpatterns = [
+    path('bin/list/', views.BinListView.as_view(), name= 'bin-list'),
     path('bin/create/', views.BinCreateView.as_view(), name= 'bin-create'),
     path('bin/detail/<int:pk>/', views.BinDetailView.as_view(), name= 'bin-detail'),
     path('bin/update/<int:pk>/', views.BinUpdateView.as_view(), name= 'bin-update'),
@@ -37,6 +38,8 @@ shippingorder_urlpatterns = [
 htmx_urlpatterns = [
     path('item/list/table-item-create/', views.table_item_create, name= 'table-item-create'),
     path('item/list/table-item-delete/<int:pk>/', views.table_item_delete, name= 'table-item-delete'),
+    path('bin/list/table-bin-create/', views.table_bin_create, name= 'table-bin-create'),
+    path('bin/list/table-bin-delete/<int:pk>/', views.table_bin_delete, name= 'table-bin-delete'),
     path('shippingorder/list/table-item-create/', views.table_shippingorder_create, name= 'table-shippingorder-create'),
     path('shippingorder/list/table-item-delete/<int:pk>/', views.table_shippingorder_delete, name= 'table-shippingorder-delete'),
     path('shippingorder/detail/<int:pk>/table-shippingorderitem-create/', views.table_shippingorderitem_create, name= 'table-shippingorderitem-create'),

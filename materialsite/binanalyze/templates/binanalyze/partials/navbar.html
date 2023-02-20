@@ -2,7 +2,7 @@
     <div class="container-fluid">
         <a class="navbar-brand" href="{% url 'binanalyze:index' %}">Warehouse Bin Analyzer</a>
 
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
@@ -34,7 +34,7 @@
                         Bins
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">List</a></li>
+                        <li><a class="dropdown-item" href="{% url 'binanalyze:bin-list' %}">List</a></li>
                         <li><a class="dropdown-item" href="{% url 'binanalyze:bin-create' %}">Create</a></li>
                     </ul>
                 </li>

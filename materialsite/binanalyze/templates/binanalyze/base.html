@@ -13,6 +13,13 @@
     <body>
         {% include "binanalyze/partials/navbar.html" %}
 
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
         <div class="container mt-2">
             {% block content %}
             {% endblock %}

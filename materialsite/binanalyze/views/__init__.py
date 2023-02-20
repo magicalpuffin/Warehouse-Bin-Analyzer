@@ -2,7 +2,8 @@
 
 from .analyze_views import AnalyzeView
 
-from .bin_views import BinDetailView, BinUpdateView, BinCreateView, BinDeleteView
+from .bin_views import table_bin_create, table_bin_delete
+from .bin_views import BinListView, BinDetailView, BinUpdateView, BinCreateView, BinDeleteView
 
 from .index_view import IndexView
 

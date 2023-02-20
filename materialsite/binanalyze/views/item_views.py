@@ -7,6 +7,7 @@ from binanalyze.forms import ItemForm
 
 from django_tables2 import SingleTableMixin
 from django.shortcuts import render
+from django.contrib import messages
 from django.views.generic import (
     ListView,
     DetailView,
@@ -50,18 +51,33 @@ class ItemDeleteView(DeleteView):
     template_name = 'binanalyze/item/delete.html'
 
 # Function based views used to update table as part of htmx
+# Might need to display and render the entire section, or have multiple sections being updated...
+# Could refresh the entire content every post and delete
 # Not sure if it is possible to use a class based view for these
 def table_item_create(request):
-    newitem = ItemForm(request.POST)
-    newitem.save()
+    if request.method == 'POST':
+        newitemform = ItemForm(request.POST)
+        if newitemform.is_valid():
+            newitem = newitemform.save()
+
+            # Currently base and the table view has messages, which may result in duplicate messages...
+            # Could add extra tags to check
+            # Some formatting issues with table moving
+            messages.add_message(request, messages.SUCCESS, f'Created {newitem.name}')
+
+        else:
+            # Basic error handeling, however, form is not passed, errors on form not directly displayed
+            messages.add_message(request, messages.WARNING, "Couldn't create item")
 
     updatedtable = ItemTable(Item.objects.all())
 
     return render(request, 'binanalyze/item/partials/table.html', {'table': updatedtable})
 
 def table_item_delete(request, pk):
-    removeitem = Item.objects.get(pk = pk)
-    removeitem.delete()
+    if request.method == 'DELETE':
+        removeitem = Item.objects.get(pk = pk)
+        removeitem.delete()
+        messages.add_message(request, messages.SUCCESS, f'Deleted {removeitem.name}')
 
     updatedtable = ItemTable(Item.objects.all())
 
