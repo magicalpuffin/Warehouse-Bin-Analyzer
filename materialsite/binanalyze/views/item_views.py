@@ -34,16 +34,17 @@ class ItemListView(SingleTableMixin, TemplateView):
 class ItemDetailView(DetailView):
     model = Item
     template_name = 'binanalyze/item/detail.html'
-    
+
+# These views don't use the modelform
 class ItemUpdateView(UpdateView):
     model = Item
     template_name = 'binanalyze/item/create_update.html'
-    fields = ['name', 'unitlength', 'length', 'width', 'height', 'weight']
+    fields = ['name', 'unitlength', 'length', 'width', 'height', 'unitweight', 'weight']
     
 class ItemCreateView(CreateView):
     model = Item
     template_name = 'binanalyze/item/create_update.html'
-    fields = ['name', 'unitlength', 'length', 'width', 'height', 'weight']
+    fields = ['name', 'unitlength', 'length', 'width', 'height', 'unitweight', 'weight']
 
 class ItemDeleteView(DeleteView):
     model = Item

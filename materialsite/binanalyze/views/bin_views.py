@@ -34,12 +34,12 @@ class BinDetailView(DetailView):
 class BinUpdateView(UpdateView):
     model = Bin
     template_name = 'binanalyze/bin/create_update.html'
-    fields = ['name', 'unitlength', 'length', 'width', 'height', 'weight']
+    fields = ['name', 'unitlength', 'length', 'width', 'height', 'unitweight', 'weight']
     
 class BinCreateView(CreateView):
     model = Bin
     template_name = 'binanalyze/bin/create_update.html'
-    fields = ['name', 'unitlength', 'length', 'width', 'height', 'weight']
+    fields = ['name', 'unitlength', 'length', 'width', 'height', 'unitweight', 'weight']
 
 class BinDeleteView(DeleteView):
     model = Bin

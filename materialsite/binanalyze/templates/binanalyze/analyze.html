@@ -11,7 +11,7 @@
         <table class="table table-striped">
             <thead>
             <tr>
-                <th>Shipment Number</th>
+                <th>Shipping Order Name</th>
                 <th>Pack Status</th>
                 <th>Bin Name</th>
                 <th>Volume Difference</th>
@@ -25,7 +25,7 @@
             {% if d %}  
             {% for i in d %}
             <tr>
-                <td>{{i.Shipment_Number}}</td>
+                <td>{{i.shippingorder_name}}</td>
                 <td>{{i.Pack_Status}}</td>
                 <td>{{i.Bin_Name}}</td>
                 <td>{{i.Volume_Difference}}</td>

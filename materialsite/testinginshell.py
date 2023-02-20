@@ -26,12 +26,44 @@ so1.items.add(item1, through_defaults= {'quantity': 2})
 so1.items.add(item2, through_defaults= {'quantity': 3})
 so1.items.all()
 
+# 2023-02-20 Tesitng query and binpacking
 Item.objects.all()
 Bin.objects.all()
 ShippingOrder.objects.all()
 ShippingOrderItem.objects.all()
 
 item1 = Item.objects.get(name= 'Item1')
+so1 = ShippingOrder.objects.get(name = 'Shipping Order 1')
+
+recordlist = []
+for shippingorderitem in ShippingOrderItem.objects.all():
+    rowdict = {
+        'shippingorder_name':shippingorderitem.shippingorder.name,
+        'quantity': shippingorderitem.quantity,
+        'item_length': shippingorderitem.item.get_length(True),
+        'item_width': shippingorderitem.item.get_width(True),
+        'item_height': shippingorderitem.item.get_height(True),
+        'item_weight': shippingorderitem.item.get_weight(True),
+    }
+    recordlist.append(rowdict)
+
+binlist = []
+for bin in Bin.objects.all():
+    rowdict = {
+        'bin_name':bin.name,
+        'bin_length': bin.get_length(True),
+        'bin_width': bin.get_width(True),
+        'bin_height': bin.get_height(True),
+        'bin_weight': bin.get_weight(True),
+    }
+    binlist.append(rowdict)
+
+bin_df = pd.DataFrame.from_records(binlist)
+
+so_df = pd.DataFrame.from_records(recordlist)
+so_df = so_df.set_index('shippingorder_name')
+
+result_df = so_df.groupby(level= 0).apply(pack_SO, bin_df=bin_df)
 
 # Selects Shipping order, items and quantity
 ShippingOrderItem.objects.filter(shippingorder = so1)

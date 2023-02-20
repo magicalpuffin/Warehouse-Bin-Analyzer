@@ -38,20 +38,37 @@ class AnalyzeView(TemplateView):
     def post(self, request, *args, **kwargs):
         context = self.get_context_data()
 
-        # Selects all shipping orders, renames due to how the current binpackfunction works
-        # Manually sets all quantities to 1 because I haven't figured that out yet
-        so_items = ShippingOrderItem.objects.all()
-        so_df = pd.DataFrame.from_records(so_items.values('shippingorder__name', 'quantity', 'item__name', 'item__length', 'item__width', 'item__height', 'item__weight'))
-        so_df.columns = ['shippingorder_name', 'quantity', 'item_name', 'item_length', 'item_width', 'item_height', 'item_weight']
-        so_df = so_df.set_index('shippingorder_name')
+        recordlist = []
+        for shippingorderitem in ShippingOrderItem.objects.all():
+            rowdict = {
+                'shippingorder_name':shippingorderitem.shippingorder.name,
+                'quantity': shippingorderitem.quantity,
+                'item_length': shippingorderitem.item.get_length(True),
+                'item_width': shippingorderitem.item.get_width(True),
+                'item_height': shippingorderitem.item.get_height(True),
+                'item_weight': shippingorderitem.item.get_weight(True),
+            }
+            recordlist.append(rowdict)
 
-        binobjs = Bin.objects.all()
-        bin_df = pd.DataFrame.from_records(binobjs.values('name', 'length', 'width', 'height', 'weight'))
-        bin_df.columns = ['bin_name', 'bin_length', 'bin_width', 'bin_height', 'bin_weight']
+        binlist = []
+        for bin in Bin.objects.all():
+            rowdict = {
+                'bin_name':bin.name,
+                'bin_length': bin.get_length(True),
+                'bin_width': bin.get_width(True),
+                'bin_height': bin.get_height(True),
+                'bin_weight': bin.get_weight(True),
+            }
+            binlist.append(rowdict)
+
+        bin_df = pd.DataFrame.from_records(binlist)
+        so_df = pd.DataFrame.from_records(recordlist)
+        so_df = so_df.set_index('shippingorder_name')
 
         result_df = so_df.groupby(level= 0).apply(pack_SO, bin_df=bin_df)
 
         # TODO Check if this actually fine for displaying dataframes as tables
+        # Could use the django_tables2 for this now
         json_records = result_df.reset_index().to_json(orient ='records')
         data = []
         data = json.loads(json_records)

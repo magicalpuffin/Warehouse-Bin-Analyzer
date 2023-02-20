@@ -1,7 +1,7 @@
 import django_tables2 as tables
 from django_tables2.utils import A
 
-from binanalyze.models import Item, ShippingOrder, ShippingOrderItem
+from binanalyze.models import Item, Bin, ShippingOrder, ShippingOrderItem
 
 class ItemTable(tables.Table):
     # LinkColumn is passed pk into the link using A (accessor)
@@ -23,7 +23,7 @@ class BinTable(tables.Table):
     delete = tables.TemplateColumn(template_name= 'binanalyze/bin/partials/in-table-delete.html')
 
     class Meta:
-        model = Item
+        model = Bin
         template_name = "django_tables2/bootstrap-responsive.html"
         fields = ['unitlength', 'length', 'width', 'height', 'unitweight', 'weight']
         sequence = ['name', 'unitlength', 'length', 'width', 'height', 'unitweight', 'weight', 'delete']

@@ -1,5 +1,9 @@
 import pandas as pd
-from py3dbp import Packer, Bin, Item
+
+# Had to manually set the decimals in the package because small volumes resulted in 0
+# Changing the value in py3dbp.main for didn't work for some reason
+import py3dbp
+from decimal import Decimal
 
 # Currently these functions were just imported from the previous project and made to be functional
 # Should consider other bin packing optimization packages
@@ -25,19 +29,16 @@ def get_excess_vol_weight(bin):
     """
     Takes a bin and finds the extra volume and weight left by the fitted items
     """
-    total_item_vol = 0
-    total_item_weight = 0
+    total_item_vol = Decimal(0)
+    total_item_weight = Decimal(0)
     for i in bin.items:
         total_item_vol = total_item_vol + i.get_volume()
         total_item_weight = total_item_weight + i.weight
 
-    # Determines the total item weight and volume in packed SO for validation and comparision with bin maximums
-    # Uses Decimal module. I don't know how to use it so I convert it to float
-
-    vol_diff = float(bin.get_volume() - total_item_vol)
-    weight_diff = float(bin.max_weight - total_item_weight)
-    vol_util = float(total_item_vol / bin.get_volume())
-    weight_util = float(total_item_weight / bin.max_weight)
+    vol_diff = bin.get_volume() - total_item_vol
+    weight_diff = bin.max_weight - total_item_weight
+    vol_util = total_item_vol / bin.get_volume()
+    weight_util = total_item_weight / bin.max_weight
 
     return vol_diff, weight_diff, vol_util, weight_util
 
@@ -55,18 +56,18 @@ def pack_SO(df, bin_df):
     # Prepares and runs packer object
     # ----
     # Initialized packer object. From the py3dbp package.
-    packer = Packer()
+    packer = py3dbp.Packer()
 
     # Loops through each item in SO. Will add items to packer multiple times based on quantity.
     # Index should be the item name.
     for index, row in df.iterrows():
         for i in range(int(row["quantity"])):
-            packer.add_item(Item(index, row["item_length"], row["item_width"], row["item_height"], row["item_weight"]))
+            packer.add_item(py3dbp.Item(index, row["item_length"], row["item_width"], row["item_height"], row["item_weight"]))
 
     # Loops though each bins and adds them into the packer object
     # I want to switch this to use indexes but it breaks the package for some reason
     for index, row in bin_df.iterrows():
-        packer.add_bin(Bin(row["bin_name"], row["bin_length"], row["bin_width"], row["bin_height"], row["bin_weight"]))
+        packer.add_bin(py3dbp.Bin(row["bin_name"], row["bin_length"], row["bin_width"], row["bin_height"], row["bin_weight"]))
     
     # Packer evaluates how well items are packed in each bin
     packer.pack()
