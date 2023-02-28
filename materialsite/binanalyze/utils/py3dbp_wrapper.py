@@ -3,6 +3,7 @@ import pandas as pd
 # Had to manually set the decimals in the package because small volumes resulted in 0
 # Changing the value in py3dbp.main for didn't work for some reason
 import py3dbp
+py3dbp.main.DEFAULT_NUMBER_OF_DECIMALS = 9
 from decimal import Decimal
 
 # Currently these functions were just imported from the previous project and made to be functional
@@ -70,7 +71,7 @@ def pack_SO(df, bin_df):
         packer.add_bin(py3dbp.Bin(row["bin_name"], row["bin_length"], row["bin_width"], row["bin_height"], row["bin_weight"]))
     
     # Packer evaluates how well items are packed in each bin
-    packer.pack()
+    packer.pack(number_of_decimals= 9)
     # ----
     # Interpret the packed results
     # Note that values from packer use the Decimal module

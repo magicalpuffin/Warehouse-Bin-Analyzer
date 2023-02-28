@@ -8,6 +8,8 @@ from binanalyze.forms import BinForm
 from django_tables2 import SingleTableMixin
 from django.shortcuts import render
 from django.contrib import messages
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_control
 from django.views.generic import (
     ListView,
     DetailView,
@@ -17,6 +19,7 @@ from django.views.generic import (
     TemplateView,
 )
 
+@method_decorator(cache_control(no_cache= True, must_revalidate= True, no_store= True), name= 'dispatch')
 class BinListView(SingleTableMixin, TemplateView):
     table_class = BinTable
     table_data = Bin.objects.all()

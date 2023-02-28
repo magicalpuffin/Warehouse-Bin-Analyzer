@@ -8,6 +8,8 @@ from binanalyze.forms import ItemForm
 from django_tables2 import SingleTableMixin
 from django.shortcuts import render
 from django.contrib import messages
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_control
 from django.views.generic import (
     ListView,
     DetailView,
@@ -19,6 +21,7 @@ from django.views.generic import (
 
 # Seems to have a bug when caching and reloading page showing deleted items
 # Should add error messages
+@method_decorator(cache_control(no_cache= True, must_revalidate= True, no_store= True), name= 'dispatch')
 class ItemListView(SingleTableMixin, TemplateView):
     # default context name for table_class is table
     # tables need have data passed

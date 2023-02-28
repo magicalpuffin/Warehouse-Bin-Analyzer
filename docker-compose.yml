@@ -1,0 +1,33 @@
+
+version: "3.9"
+services:
+  web:
+    build: .
+    command: python materialsite/manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/app
+    env_file:
+      - ./.env.dev
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+
+  db:
+    image: postgres
+    restart: always
+    env_file:
+      - ./.env.dev.db
+    volumes:
+      - material_site_pg_data:/var/lib/postgresql/data
+  
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+    depends_on:
+      - db
+
+volumes:
+  material_site_pg_data:
