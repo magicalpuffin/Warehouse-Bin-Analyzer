@@ -15,7 +15,7 @@ services:
 
   db:
     image: postgres
-    restart: always
+    restart: on-failure:5
     env_file:
       - ./.env.dev.db
     volumes:
@@ -23,7 +23,7 @@ services:
   
   adminer:
     image: adminer
-    restart: always
+    restart: on-failure:5
     ports:
       - 8080:8080
     depends_on:

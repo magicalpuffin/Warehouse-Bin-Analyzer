@@ -18,7 +18,8 @@ from django.urls import path, include
 from django.shortcuts import redirect
 
 urlpatterns = [
-    path('', lambda request: redirect('binanalyze/', permanent= False)),
+    path('', lambda request: redirect('binanalyze/', permanent= False), name= 'home'),
     path('binanalyze/', include('binanalyze.urls')),
+    path('users/', include('users.urls')),
     path('admin/', admin.site.urls),
 ]

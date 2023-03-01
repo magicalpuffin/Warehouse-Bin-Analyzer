@@ -37,6 +37,7 @@ ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
 
 INSTALLED_APPS = [
     'binanalyze.apps.BinanalyzeConfig',
+    'users.apps.UsersConfig',
     'crispy_forms',
     'django_tables2',
     'django.contrib.admin',
@@ -134,6 +135,9 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGIN_REDIRECT_URL = 'home'
+LOGIN_URL = 'users:login'
 
 # Crispyforms
 CRISPY_TEMPLATE_PACK = 'bootstrap4'

@@ -1,6 +1,12 @@
 # File used to manage commands being run in shell
 # Needs to be in materialsite directory to run correctly
-# Needs to be run through py manage.py shell instead of just py
+
+# How to access:
+    # Opena a terminal in the docker container running the django app
+    # Activate the django interactive console
+# Example:
+    # docker exec - it <container name> /bin/bash
+    # python manage.py shell
 
 import pandas as pd
 from binanalyze.models import Item, Bin, ShippingOrder, ShippingOrderItem
