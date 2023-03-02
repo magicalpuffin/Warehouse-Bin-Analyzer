@@ -2,8 +2,10 @@ import pandas as pd
 import json
 
 from binanalyze.models import Item, Bin, ShippingOrder, ShippingOrderItem
+from binanalyze.tables import ItemTable, BinTable, ShippingOrderTable, ShippingOrderItemTable, PackResultTable
 from binanalyze.utils.py3dbp_wrapper import pack_SO
 
+from django_tables2 import MultiTableMixin
 from django.shortcuts import render
 from django.views.generic import (
     ListView,
@@ -13,6 +15,7 @@ from django.views.generic import (
     DeleteView,
     TemplateView,
 )
+
 
 # TODO Create multiple analyze views
     # Bin packing and results
@@ -24,16 +27,26 @@ from django.views.generic import (
     # Data visualization on volume and weight utilization
     # Many of these will probably need to merge with dash
 
+
 # Analyze
-class AnalyzeView(TemplateView):
+class AnalyzeView(MultiTableMixin, TemplateView):
     template_name = 'binanalyze/analyze.html'
+    
+    tables = [
+        ShippingOrderItemTable(ShippingOrderItem.objects.all(), exclude= ['delete']),
+        BinTable(Bin.objects.all(), exclude= ['delete']),
+        ]
+    
+    table_pagination = {
+        'per_page': 5
+    }
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['shipords'] = ShippingOrder.objects.all()
-        context['bins'] = Bin.objects.all()
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     context['shipords'] = ShippingOrder.objects.all()
+    #     context['bins'] = Bin.objects.all()
 
-        return context
+    #     return context
     
     def post(self, request, *args, **kwargs):
         context = self.get_context_data()
@@ -67,11 +80,10 @@ class AnalyzeView(TemplateView):
 
         result_df = so_df.groupby(level= 0).apply(pack_SO, bin_df=bin_df)
 
-        # TODO Check if this actually fine for displaying dataframes as tables
-        # Could use the django_tables2 for this now
-        json_records = result_df.reset_index().to_json(orient ='records')
-        data = []
-        data = json.loads(json_records)
+        numeric_cols = ['volume_difference', 'weight_difference', 'volume_utilization', 'weight_utilization']
+        result_df.loc[:, numeric_cols] = result_df.loc[:, numeric_cols].apply(pd.to_numeric, axis=1).round(6)
 
-        context['d'] = data
+        result_records = result_df.reset_index().to_dict(orient ='records')
+        context['packresulttable'] = PackResultTable(result_records)
+        
         return render(request, self.template_name, context)

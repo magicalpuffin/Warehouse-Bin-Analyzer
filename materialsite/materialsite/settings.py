@@ -38,6 +38,7 @@ ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
 INSTALLED_APPS = [
     'binanalyze.apps.BinanalyzeConfig',
     'users.apps.UsersConfig',
+    'base.apps.BaseConfig',
     'crispy_forms',
     'django_tables2',
     'django.contrib.admin',
@@ -82,6 +83,7 @@ WSGI_APPLICATION = 'materialsite.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+# Database environment variables are set with docker compose
 DATABASES = {
     'default': {
         "ENGINE": os.environ.get("SQL_ENGINE", "django.db.backends.sqlite3"),
@@ -136,8 +138,12 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# Login settings
 LOGIN_REDIRECT_URL = 'home'
 LOGIN_URL = 'users:login'
 
-# Crispyforms
+# crispyforms
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+# django-tables2
+DJANGO_TABLES2_TEMPLATE = 'django_tables2/bootstrap4.html'

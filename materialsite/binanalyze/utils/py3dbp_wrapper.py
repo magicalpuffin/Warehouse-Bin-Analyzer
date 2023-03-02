@@ -81,10 +81,10 @@ def pack_SO(df, bin_df):
     # ----
     # Output series in order to automatically create a dataframe from the apply function
     # packer and bestbin are included for debugging purposes
-    output_sr = pd.Series({'Pack_Status': pack_status, 
-                           'Bin_Name': bin_name, 
-                           'Volume_Difference': vol_diff, 
-                           'Weight_Difference': weight_diff,
-                           'Volume_Utilization': vol_util,
-                           'Weight_Utilization': weight_util})
+    output_sr = pd.Series({'pack_status': pack_status, 
+                           'bin_name': bin_name, 
+                           'volume_difference': vol_diff, 
+                           'weight_difference': weight_diff,
+                           'volume_utilization': vol_util,
+                           'weight_utilization': weight_util})
     return output_sr

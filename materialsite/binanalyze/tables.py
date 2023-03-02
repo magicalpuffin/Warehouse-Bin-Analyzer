@@ -11,7 +11,6 @@ class ItemTable(tables.Table):
 
     class Meta:
         model = Item
-        template_name = "django_tables2/bootstrap-responsive.html"
         fields = ['unitlength', 'length', 'width', 'height', 'unitweight', 'weight']
         sequence = ['name', 'unitlength', 'length', 'width', 'height', 'unitweight', 'weight', 'delete']
 
@@ -24,7 +23,6 @@ class BinTable(tables.Table):
 
     class Meta:
         model = Bin
-        template_name = "django_tables2/bootstrap-responsive.html"
         fields = ['unitlength', 'length', 'width', 'height', 'unitweight', 'weight']
         sequence = ['name', 'unitlength', 'length', 'width', 'height', 'unitweight', 'weight', 'delete']
 
@@ -34,7 +32,6 @@ class ShippingOrderTable(tables.Table):
     
     class Meta:
         model = ShippingOrder
-        template_name = "django_tables2/bootstrap-responsive.html"
         fields = ['order_date']
         sequence = ['name', 'order_date', 'delete']
 
@@ -44,6 +41,15 @@ class ShippingOrderItemTable(tables.Table):
 
     class Meta:
         model = ShippingOrderItem
-        template_name = "django_tables2/bootstrap-responsive.html"
         fields = ['shippingorder', 'item', 'quantity']
         sequence = ['shippingorder', 'item', 'quantity', 'delete']
+
+
+class PackResultTable(tables.Table):
+    shippingorder_name = tables.Column()
+    pack_status = tables.Column()
+    bin_name = tables.Column()
+    volume_difference = tables.Column()
+    weight_difference = tables.Column()
+    volume_utilization = tables.Column()
+    weight_utilization = tables.Column()

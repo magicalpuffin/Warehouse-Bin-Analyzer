@@ -1,6 +1,7 @@
-{% extends "binanalyze/base.html" %}
+{% extends "base/base.html" %}
 
 {% load crispy_forms_tags %}
+{% load django_tables2 %}
 {% block content %}
     <h1>Analyze</h1>
     <form method="POST">
@@ -9,55 +10,13 @@
     </form>
     <div class="container">
         <h3 class="text-center"><u>Packed Results</u></h3><br>            
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th>Shipping Order Name</th>
-                <th>Pack Status</th>
-                <th>Bin Name</th>
-                <th>Volume Difference</th>
-                <th>Weight Difference</th>
-                <th>Volume Utilization</th>
-                <th>Weight Utilization</th>
-            </tr>
-            </thead>
-            <tbody>
-            <!-- jinja2 Technique -->
-            {% if d %}  
-            {% for i in d %}
-            <tr>
-                <td>{{i.shippingorder_name}}</td>
-                <td>{{i.Pack_Status}}</td>
-                <td>{{i.Bin_Name}}</td>
-                <td>{{i.Volume_Difference}}</td>
-                <td>{{i.Weight_Difference}}</td>
-                <td>{{i.Volume_Utilization}}</td>
-                <td>{{i.Weight_Utilization}}</td>
-            </tr>
-            {% endfor %}
-            {% endif %}
-            </tbody>
-        </table>
+        {% if packresulttable %}
+            {% render_table packresulttable%}
+        {% endif %}
     </div>
     <H3>Shipping Orders</H3>
-    {% for shipord in shipords %}
-        <div class="card">
-            <div class="card-header">
-                <b><a href="{% url 'binanalyze:shippingorder-detail' shipord.id %}">{{ shipord.name }}</a></b>
-            </div>
-            <div class="card-body">
-                {% for itm in shipord.items.all %}
-                <p>{{ itm.name }}<p>
-                {% endfor%}
-            </div>
-        </div>
-    {% endfor %}
+        {% render_table tables.0 %}
     <H3>Bins</H3>
-    {% for bin in bins %}
-        <div class="card">
-            <div class="card-header">
-                <b><a href="{% url 'binanalyze:bin-detail' bin.id %}">{{ bin.name }}</a></b>
-            </div>
-        </div>
-    {% endfor %}
+        {% render_table tables.1 %}
+
 {% endblock content %}
