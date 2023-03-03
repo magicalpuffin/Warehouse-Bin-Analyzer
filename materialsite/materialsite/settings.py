@@ -142,6 +142,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = 'home'
 LOGIN_URL = 'users:login'
 
+# Email settings
+EMAIL_BACKEND = os.environ.get('EMAIL_BACKEND_ENV')
+EMAIL_HOST = os.environ.get('EMAIL_HOST_ENV')
+EMAIL_PORT = os.environ.get('EMAIL_PORT_ENV')
+
 # crispyforms
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 

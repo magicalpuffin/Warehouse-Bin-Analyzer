@@ -9,9 +9,10 @@ services:
     env_file:
       - ./.env.dev
     ports:
-      - "8000:8000"
+      - 8000:8000
     depends_on:
       - db
+      - maildev
 
   db:
     image: postgres
@@ -28,6 +29,11 @@ services:
       - 8080:8080
     depends_on:
       - db
+
+  maildev:
+    image: maildev/maildev
+    ports:
+      - 1080:1080
 
 volumes:
   material_site_pg_data:

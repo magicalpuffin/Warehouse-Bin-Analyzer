@@ -2,5 +2,16 @@
 {% load crispy_forms_tags %}
 {% block content %}
     <div class="content-section">
+    <h3>Profile</h1>
+    <p> {{ user.username }}</p>
+    <p> {{ user.email }}</p>
     </div>
+    <form method="POST">
+    {% csrf_token %}
+    <fieldset class="form-group">
+        <legend class="border-bottom mb-4">Update Profile</legend>
+        {{ form|crispy }}
+        <button class="btn btn-outline-info" type="submit">Submit</button>
+    </fieldset>
+</form>
 {% endblock content %}
