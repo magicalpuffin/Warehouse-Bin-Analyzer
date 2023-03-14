@@ -8,7 +8,8 @@ COPY requirements.txt .
 RUN pip install -r requirements.txt
 
 # Copy project
-COPY . .
+COPY materialsite/. .
+COPY zappa_settings.py .
 
 # Grab the zappa handler.py and put it in the working directory
 RUN ZAPPA_HANDLER_PATH=$( \

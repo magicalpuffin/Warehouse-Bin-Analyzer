@@ -24,10 +24,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = int(os.environ.get('DEBUG', default=0))
+DEBUG = True
 
 # 'DJANGO_ALLOWED_HOSTS' should be a single string of hosts with a space between each.
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [os.environ.get('ALLOWED_HOSTS', 'localhost')]
 
 
 # Application definition
@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'base.apps.BaseConfig',
     'crispy_forms',
     'django_tables2',
+    'django_s3_storage',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -128,7 +129,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATICFILES_STORAGE = os.environ.get('STATICFILES_STORAGE', 'django.contrib.staticfiles.storage.StaticFilesStorage')
+AWS_S3_BUCKET_NAME_STATIC = os.environ.get('AWS_S3_BUCKET_NAME_STATIC')
+
+if AWS_S3_BUCKET_NAME_STATIC:
+   STATIC_URL= "https://%s.s3.amazonaws.com/" % AWS_S3_BUCKET_NAME_STATIC
+else:
+   STATIC_URL= 'static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
@@ -140,9 +147,9 @@ LOGIN_REDIRECT_URL = 'home'
 LOGIN_URL = 'users:login'
 
 # Email settings
-EMAIL_BACKEND = os.environ.get('EMAIL_BACKEND_ENV')
-EMAIL_HOST = os.environ.get('EMAIL_HOST_ENV')
-EMAIL_PORT = os.environ.get('EMAIL_PORT_ENV')
+EMAIL_BACKEND = os.environ.get('EMAIL_BACKEND')
+EMAIL_HOST = os.environ.get('EMAIL_HOST')
+EMAIL_PORT = os.environ.get('EMAIL_PORT')
 
 # crispyforms
 CRISPY_TEMPLATE_PACK = 'bootstrap4'

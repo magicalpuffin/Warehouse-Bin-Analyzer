@@ -5,7 +5,7 @@ services:
       context: ..
       dockerfile: docker/Dockerfile_local
     command: python materialsite/manage.py runserver 0.0.0.0:8000
-    image: django-lambda-example-web
+    image: materialsite-web
     volumes:
       - ..:/app
     env_file:
