@@ -32,14 +32,19 @@ from django.views.generic import (
 class AnalyzeView(MultiTableMixin, TemplateView):
     template_name = 'binanalyze/analyze.html'
     
-    tables = [
-        ShippingOrderItemTable(ShippingOrderItem.objects.all(), exclude= ['delete']),
-        BinTable(Bin.objects.all(), exclude= ['delete']),
-        ]
+    tables = [ShippingOrderItemTable, BinTable]
+    tables_data = [ShippingOrderItem.objects.all(), Bin.objects.all()]
     
     table_pagination = {
         'per_page': 5
     }
+
+    # Uhh sketchy work around, overrides the default function, changes object to exclude the col
+    def get_tables(self):
+        tablelist = super().get_tables()
+        for tableinst in tablelist:
+            tableinst.exclude = ['delete']
+        return tablelist
 
     # def get_context_data(self, **kwargs):
     #     context = super().get_context_data(**kwargs)

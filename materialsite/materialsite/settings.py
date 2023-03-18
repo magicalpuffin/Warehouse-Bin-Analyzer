@@ -29,6 +29,7 @@ DEBUG = True
 # 'DJANGO_ALLOWED_HOSTS' should be a single string of hosts with a space between each.
 ALLOWED_HOSTS = [os.environ.get('ALLOWED_HOSTS', 'localhost')]
 
+CSRF_TRUSTED_ORIGINS = ['https://*.puffinsystems.com']
 
 # Application definition
 
